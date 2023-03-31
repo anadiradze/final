@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from '../user-service.service';
-import { Ifriends } from '../user-list/models/user.model';
+import { IUser, IUsers } from '../user-list/models/user.model';
 
 @Component({
   selector: 'app-user-details',
@@ -9,8 +9,8 @@ import { Ifriends } from '../user-list/models/user.model';
   styleUrls: ['./user-details.component.css'],
 })
 export class UserDetailsComponent implements OnInit {
-  user: any;
-  friends: Ifriends[] = [];
+  user!: IUser;
+  friends: IUsers[] = [];
   page = 0;
   size = 10;
   isLoading = false;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IUser } from './user-list/models/user.model';
+import { IUser, IUsers } from './user-list/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,17 +12,14 @@ export class UserServiceService {
 
   getUsers(page: number, size: number) {
     const url = `${this.apiUrl}/users?_page=${page}&_size=${size}`;
-    return this.http.get(url);
+    return this.http.get<IUsers>(url);
   }
   getUser(userId: string) {
     return this.http.get<IUser>(`${this.apiUrl}/user?id=${userId}`);
   }
   getFriends(userId: string, page: number, size: number) {
     const url = `${this.apiUrl}/user?UserId=${userId}&_page=${page}&_size=${size}`;
-    return this.http.get(url);
-  }
-  getFriend(userId: string, friendId: string) {
-    return this.http.get(`${this.apiUrl}/user?userId=${userId}&id=${friendId}`);
+    return this.http.get<IUser>(url);
   }
 
   onScroll(
@@ -34,6 +31,7 @@ export class UserServiceService {
   ): void {
     const isScrolledToBottom =
       element.scrollHeight - element.scrollTop === element.clientHeight;
+      console.log(element.scrollHeight, element.scrollTop,element.clientHeight)
     if (isScrolledToBottom && !isLoading && hasMoreData) {
       page++;
       callback(page);

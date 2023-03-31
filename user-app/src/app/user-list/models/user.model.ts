@@ -33,12 +33,3 @@ export interface IUsers {
   title: string;
   imageUrl: string;
 }
-export interface Ifriends {
-  userId: string;
-  id: string;
-  name: string;
-  lastName: string;
-  prefix: string;
-  title: string;
-  imageUrl: string;
-}
