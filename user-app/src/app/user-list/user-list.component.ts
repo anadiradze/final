@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserServiceService } from '../user-service.service';
-import {  IUsers } from './models/user.model';
+import { IUsers } from './models/user.model';
 
 @Component({
   selector: 'app-user-list',
@@ -24,8 +24,7 @@ export class UserListComponent implements OnInit {
 
   getUsers() {
     this.isLoading = true;
-    this.userService.getUsers(this.page, this.size).subscribe((data:any) => {
-      console.log(data)
+    this.userService.getUsers(this.page, this.size).subscribe((data: any) => {
       if (data.length === 0) {
         this.hasMoreData = false;
       } else {
