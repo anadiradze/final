@@ -1,14 +1,15 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserServiceService } from '../user-service.service';
-import { Ifriends, IUser } from '../user-list/models/user.model';
+import { Ifriends } from '../user-list/models/user.model';
+
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css'],
 })
 export class UserDetailsComponent implements OnInit {
-  user!: any;
+  user: any;
   friends: Ifriends[] = [];
   page = 0;
   size = 10;
@@ -31,20 +32,6 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  getFriends(userId: string) {
-    this.isLoading = true;
-    this.userService
-      .getFriends(userId, this.page, this.size)
-      .subscribe((data: any) => {
-        this.friends = this.friends.concat(data);
-        this.isLoading = false;
-        console.log(data.length, 'data.length');
-        if (data.length < this.size) {
-          this.hasMoreData = false;
-        }
-      });
-  }
-
   getUser(userId: string) {
     this.isLoading = true;
     this.userService.getUser(userId).subscribe((data: any) => {
@@ -53,10 +40,20 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
-
-  goToMainPage() {
-    this.router.navigate(['/']);
+  getFriends(userId: string) {
+    this.isLoading = true;
+    this.userService
+      .getFriends(userId, this.page, this.size)
+      .subscribe((data: any) => {
+        this.friends = this.friends.concat(data);
+        this.isLoading = false;
+        if (data < this.size) {
+          this.hasMoreData = false;
+        }
+        this.friends = this.friends.filter((obj) => obj.id !== userId);
+      });
   }
+
   onScrollFriends() {
     const friendsListEl = this.friendsList?.nativeElement;
     const userId = this.route.snapshot.paramMap.get('id');
@@ -81,5 +78,9 @@ export class UserDetailsComponent implements OnInit {
       this.getFriends(FriendsId);
       this.router.navigateByUrl(`user/${FriendsId}`);
     }
+  }
+
+  goToMainPage() {
+    this.router.navigate(['/']);
   }
 }

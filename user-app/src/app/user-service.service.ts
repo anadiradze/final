@@ -18,8 +18,11 @@ export class UserServiceService {
     return this.http.get<IUser>(`${this.apiUrl}/user?id=${userId}`);
   }
   getFriends(userId: string, page: number, size: number) {
-    const url = `${this.apiUrl}/friends?UserId=${userId}&_page=${page}&_size=${size}`;
+    const url = `${this.apiUrl}/user?UserId=${userId}&_page=${page}&_size=${size}`;
     return this.http.get(url);
+  }
+  getFriend(userId: string, friendId: string) {
+    return this.http.get(`${this.apiUrl}/user?userId=${userId}&id=${friendId}`);
   }
 
   onScroll(
