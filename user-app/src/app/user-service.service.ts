@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IUser, IUsers } from './user-list/models/user.model';
 
@@ -29,9 +29,10 @@ export class UserServiceService {
     element: HTMLElement,
     callback: Function
   ): void {
+    const threshold = 50;
     const isScrolledToBottom =
-      element.scrollHeight - element.scrollTop === element.clientHeight;
-      console.log(element.scrollHeight, element.scrollTop,element.clientHeight)
+      element.scrollHeight - element.scrollTop - threshold <=
+      element.clientHeight;
     if (isScrolledToBottom && !isLoading && hasMoreData) {
       page++;
       callback(page);
