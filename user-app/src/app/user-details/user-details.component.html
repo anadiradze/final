@@ -1,0 +1,74 @@
+<header *ngIf="user" class="header">
+  <div class="userContainer">
+    <div class="userContainerContent">
+      <img class="imageUrl" [src]="user.imageUrl" alt="userImg" />
+      <p class="userContentDescription">
+        <strong>{{ user.prefix }}{{ user.name }} {{ user.lastName }}</strong>
+      </p>
+      <p class="userContentDescription">{{ user.title }}</p>
+    </div>
+  </div>
+  <fieldset class="fieldset info">
+    <legend>info</legend>
+    <div>
+      <div>
+        <strong>{{ user.prefix }} {{ user.name }} {{ user.lastName }}</strong>
+      </div>
+      <div>{{ user.title }}</div>
+      <br />
+      <div><span>Email: </span> {{ user.email }}</div>
+      <div><span>IP adress: </span> {{ user.ip }}</div>
+      <div><span>Job Area: </span> {{ user.jobArea }}</div>
+      <div><span>Job Type : </span>{{ user.jobType }}</div>
+      <div><span>Job Descriptor: </span>{{ user.jobDescriptor }}</div>
+    </div>
+  </fieldset>
+  <fieldset class="fieldset adress">
+    <legend>adress</legend>
+    <div>
+      <strong>{{ user.company.name }}</strong>
+    </div>
+    <br />
+
+    <div><span>City: </span> {{ user.address.city }}</div>
+    <div><span>Country: </span> {{ user.address.country }}</div>
+    <div><span>State: </span> {{ user.address.state }}</div>
+    <div><span>Street Address: </span>{{ user.address.streetAddress }}</div>
+    <div><span>ZIP: </span>{{ user.address.zipCode }}</div>
+  </fieldset>
+</header>
+<br />
+<div class="buttons">
+  <button class="blob-btn insideBtn" (click)="goToMainPage()">
+    User List
+    <span class="blob-btn__inner">
+      <span class="blob-btn__blobs">
+        <span class="blob-btn__blob"></span>
+        <span class="blob-btn__blob"></span>
+        <span class="blob-btn__blob"></span>
+        <span class="blob-btn__blob"></span>
+      </span>
+    </span>
+  </button>
+</div>
+<br />
+<br />
+<div class="friendsTitle blob-btn insideBtn">Friends:</div>
+<br />
+<div #friendsList class="friends-list" (scroll)="onScrollFriends()">
+  <div *ngFor="let friend of friends" [routerLink]="['/user', friend.id]">
+    <div class="userContainer" (click)="getUserWithFriends(friend.id)">
+      <div class="userContainerContent">
+        <img class="imageUrl" [src]="friend.imageUrl" alt="userImg" />
+        <p class="userContentDescription">
+          <strong
+            >{{ friend.prefix }}{{ friend.name }} {{ friend.lastName }}</strong
+          >
+        </p>
+        <p class="userContentDescription">{{ friend.title }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isLoading" class="status" >Loading...</div>
+<div *ngIf="!hasMoreData" class="status">No more data.</div>
